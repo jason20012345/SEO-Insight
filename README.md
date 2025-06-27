@@ -55,3 +55,5 @@ MIT or custom depending on usage context
 ---
 
 SEO Insight delivers fast, AI-enhanced SEO scoring without complexity. No database, no storage — just pure analysis on demand. 
+
+GEMINI_API_KEY=your-gemini-api-key-here 
