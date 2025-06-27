@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEO Insight</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>SEO Insight</h1>
+    <form id="seo-form">
+      <label for="url">Website URL:</label>
+      <input type="url" id="url" name="url" required placeholder="https://example.com" />
+      <label for="keyword">Keyword (optional):</label>
+      <input type="text" id="keyword" name="keyword" placeholder="e.g. marketing" />
+      <button type="submit">Analyze</button>
+    </form>
+    <div id="result" class="result"></div>
+    <div id="markdown-output" class="markdown-output"></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -14,10 +14,14 @@ async function analyzeContent({
   keywordDensity,
   bodyText,
 }) {
-  // Compose a prompt for Gemini
-  const prompt = `You are an expert SEO auditor. Given the following web page data, provide:
-- An SEO score (0-100)
-- 3-5 actionable recommendations to improve SEO
+  // Compose a prompt for Gemini, requesting markdown output
+  const prompt = `You are an expert SEO auditor. Given the following web page data, provide your response in markdown format with the following structure:
+
+## SEO Score
+A single number (0-100) on its own line.
+
+## Recommendations
+A bulleted list of 3-5 actionable recommendations to improve SEO.
 
 Page Data:
 Title: ${title}
@@ -46,24 +50,28 @@ Body Text: ${bodyText.slice(0, 1000)}...`;
       }
     );
     // Parse Gemini's response
-    const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    // Try to extract score and recommendations from the text
-    const scoreMatch = text.match(/score\s*[:\-]?\s*(\d{1,3})/i);
+    const markdown = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    console.log('Gemini Markdown Response:', markdown); // Debug log
+    // Extract score and recommendations from markdown
+    const scoreMatch = markdown.match(/## SEO Score\s*([0-9]{1,3})/i);
     const score = scoreMatch ? parseInt(scoreMatch[1], 10) : null;
-    const recsMatch = text.match(/recommendations?\s*[:\-]?([\s\S]*)/i);
+    const recsMatch = markdown.match(/## Recommendations([\s\S]*)/i);
     let recommendations = [];
     if (recsMatch) {
       recommendations = recsMatch[1]
-        .split(/\n|\d+\.|\*/)
-        .map(r => r.trim())
-        .filter(r => r.length > 0 && !/^score/i.test(r));
+        .split(/\n|\r/)
+        .map(line => line.trim())
+        .filter(line => line.startsWith('- ') || line.startsWith('* '))
+        .map(line => line.replace(/^[-*]\s*/, ''));
     }
     return {
       score,
       recommendations,
-      geminiRaw: text,
+      markdown,
+      geminiRaw: markdown,
     };
   } catch (err) {
+    console.error('Gemini API error:', err.response?.data || err.message); // Log error
     throw new Error(`Gemini API error: ${err.response?.data?.error?.message || err.message}`);
   }
 }
