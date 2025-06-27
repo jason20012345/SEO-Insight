@@ -17,23 +17,22 @@ document.getElementById('seo-form').addEventListener('submit', async function (e
       throw new Error(err.error || 'Unknown error');
     }
     const data = await res.json();
+    resultDiv.style.display = 'none';
+    // 1. Render the full markdown report
+    let html = '';
     if (data.markdown) {
-      resultDiv.style.display = 'none';
-      markdownDiv.innerHTML = marked.parse(data.markdown);
-      // If recommendations are present, show them as blocks below the markdown
-      if (Array.isArray(data.recommendations) && data.recommendations.length > 0) {
-        const recBlocks = data.recommendations.map(r => `<div class='rec-block'>${marked.parse(r)}</div>`).join('');
-        markdownDiv.innerHTML += `<div class='rec-blocks'>${recBlocks}</div>`;
-      }
-    } else {
-      resultDiv.style.display = '';
-      resultDiv.innerHTML = `
-        <div><strong>SEO Score:</strong> ${data.score ?? 'N/A'}</div>
-        <div><strong>Recommendations:</strong><ul>
-          ${(data.recommendations || []).map(r => `<li>${r}</li>`).join('')}
-        </ul></div>
-      `;
+      html += marked.parse(data.markdown);
     }
+    // 2. Show the extracted SEO score in a prominent block
+    if (typeof data.score === 'number') {
+      html += `<div class="score-block">SEO Score: <strong>${data.score}</strong></div>`;
+    }
+    // 3. Show each recommendation as a visually separated card
+    if (Array.isArray(data.recommendations) && data.recommendations.length > 0) {
+      const recBlocks = data.recommendations.map(r => `<div class='rec-block'>${marked.parse(r)}</div>`).join('');
+      html += `<div class='rec-blocks'>${recBlocks}</div>`;
+    }
+    markdownDiv.innerHTML = html;
   } catch (err) {
     resultDiv.style.display = '';
     resultDiv.innerHTML = `<span style=\"color: #e11d48;\">Error: ${err.message}</span>`;
