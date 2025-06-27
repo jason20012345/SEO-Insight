@@ -1,1 +1,0 @@
-// Data models for SEO Insight will be implemented here. 
