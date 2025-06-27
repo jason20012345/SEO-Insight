@@ -1,0 +1,1 @@
+// Utility functions for SEO Insight will be implemented here. 
