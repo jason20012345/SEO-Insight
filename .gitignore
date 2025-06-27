@@ -1,0 +1,30 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Output files (use output/ directory instead)
+*.csv
+*.json
+*.xlsx
+output/
+
+tmp/
+temp/
+*.tmp
+*.bak 
