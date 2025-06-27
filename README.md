@@ -2,12 +2,11 @@
 
 ## Quick Start
 
-1. **Read CLAUDE.md first** — Contains essential rules for Claude Code
-2. Install dependencies: `npm install`
-3. Set your Gemini API key in a `.env` file: `GEMINI_API_KEY=your-gemini-api-key-here`
-4. Start the server: `npm start`
-5. Open [http://localhost:3000/](http://localhost:3000/) in your browser for the web UI
-6. Or use the `/api/seo` endpoint for programmatic access
+1. Install dependencies: `npm install`
+2. Set your Gemini API key in a `.env` file: `GEMINI_API_KEY=your-gemini-api-key-here`
+3. Start the server: `npm start`
+4. Open [http://localhost:3000/](http://localhost:3000/) in your browser for the web UI
+5. Or use the `/api/seo` endpoint for programmatic access
 
 ## Features
 - **Modern Web UI**: Analyze SEO for any URL with a simple, beautiful browser interface
